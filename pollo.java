@@ -1,5 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 public class pollo {
 
@@ -14,7 +15,7 @@ public class pollo {
         this.H = H;
     }
 
-
+    //disegna il pollo
     public void draw(Graphics g) {
         g.setColor(color);
         g.fillRect(posX, posY, W, H);
@@ -22,7 +23,7 @@ public class pollo {
         g.drawRect(posX, posY, W, H);
     }
 
-
+    //muove il pollo con un input
     public void move(int dx, int dy, int panelWidth, int panelHeight) {
         posX += dx;
         posY += dy;
@@ -38,4 +39,5 @@ public class pollo {
     public int getPosY() { return posY; }
     public int getW() { return W; }
     public int getH() { return H; }
+    public void setPosX(int newX) {posX = newX;}
 }
