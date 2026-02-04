@@ -1,6 +1,5 @@
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.ArrayList;
 
 public class pollo {
 
@@ -40,4 +39,5 @@ public class pollo {
     public int getW() { return W; }
     public int getH() { return H; }
     public void setPosX(int newX) {posX = newX;}
+    public void setPosY(int newY) {posY = newY;}
 }

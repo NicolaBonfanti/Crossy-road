@@ -25,27 +25,22 @@ public class Car extends Thread {
         g.drawRect(posX, posY, W, H);
     }
 
-
-    public void stopCar() {
-        running = false;
-    }
-
     @Override
-public void run() {
-    while (running) {
-        posX += 5; 
+    public void run() {
+        while (running) {
+            posX += 5; 
 
-        if (posX > panelWidth) {
-            posX = -W;
-        }
+            if (posX > panelWidth) {
+                posX = -W;
+            }
 
-        try {
-            sleep(velocita); 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+            try {
+                sleep(velocita); 
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
     }
-}
 
 
     // Getters

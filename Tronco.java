@@ -4,7 +4,7 @@ import java.awt.Color;
 public class Tronco extends Thread{
     private int posX, posY;
     private int W, H;
-    private int velocita = 200; 
+    private int velocita = 150; 
     private Color color = new Color(150, 75, 0);
     private boolean running = true;
     private int panelWidth = 500; 
@@ -45,7 +45,6 @@ public class Tronco extends Thread{
             }
         }
     }
-
 
     // Getters
     public int getPosX() { return posX; }

@@ -13,7 +13,7 @@ public class TimeLine {
     private int delay;
     private int decrementa;
     private int previousY;
-    private int LaneW;   // larghezza corrente della barra
+    public int LaneW;   // larghezza corrente della barra
     public boolean gameOver = false;
 
     // Costruttore
@@ -50,7 +50,7 @@ public class TimeLine {
             return;
         }
 
-        if (panel.p.getPosY() != previousY) {
+        if (panel.p.getPosY() < previousY) {
             LaneW = panel.getWidth(); // reset della barra
         } else {
             LaneW -= decrementa;
@@ -83,4 +83,9 @@ public class TimeLine {
     public void printStatus() {
         System.out.println("Barra larghezza: " + LaneW + ", GameOver: " + gameOver);
     }
+
+    public void setDelay(int delay) {
+        this.delay = delay;
+    }
+
 }
