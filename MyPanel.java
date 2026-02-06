@@ -10,15 +10,14 @@ class MyPanel extends JPanel {
     //timeline
     public TimeLine timeline;
     //lista di macchine e di tronchi
-    ArrayList<Car> cars = new ArrayList<Car>();
-    public ArrayList<Tronco> tronchi = new ArrayList<Tronco>();
+    private ArrayList<Car> cars = new ArrayList<Car>();
+    private ArrayList<Tronco> tronchi = new ArrayList<Tronco>();
     //pollo
     public pollo p = new pollo(250, 470, 30, 30);
     //Gameloop
     public loop loop = new loop(p,tronchi,cars,this);
     //controllo della fine del gioco
     public boolean gameOver = false;
-    private boolean win = false;
     //colori sfondo
     private Color colorGround = new Color(34, 139, 34);
     private Color colorStreet = new Color(77, 77, 77);
@@ -32,9 +31,10 @@ class MyPanel extends JPanel {
         MyKeyboardAdapter key = new MyKeyboardAdapter(this);
         addKeyListener(key);
         
+        timeline = new TimeLine(this, 50, 5);
+
         inizializzazioneGioco();
 
-        timeline = new TimeLine(this, 50, 5);
         timeline.start();
     }
 
@@ -48,21 +48,69 @@ class MyPanel extends JPanel {
         super.paintComponent(g);       
         //Pulizia della pagina con l'aggiunta del game over
         g.setFont(new Font("Arial", Font.BOLD, 40));
-        //schermata di vincita e di perdita
-        if (gameOver && win == false) {
-            g.drawString("GAME", 200, 40);
-            g.drawString("OVER", 200, 80);
-            g.drawString("Premi r per ricominciare", 0, 200);
-            g.drawString("Premi q per riuscire", 0, 300);
-            g.drawString("Score: " + loop.score, 0,450);
-            setBackground(Color.RED);
-            return;
-        }
-        
+        //schermata di perdita
+        if (gameOver) { disegnaSchermataGameOver(g); return; }
+        g.setColor(colorGround);
+        g.fillRect(0, 390, 500, 120); // Base
         // Disegna la timeline in alto
         if (timeline != null) 
             timeline.draw(g);
+        //disegna la base del mondo
+        disegnaBase(g);
+        //disegno del pollo
+        p.draw(g);
+        //disegna il punteggio
+        g.setFont(new Font("Arial", Font.BOLD, 30));
+        g.drawString("Score: " + loop.score, 0,450);
+    }
 
+    public void setGameOver(boolean value) { gameOver = value; }
+
+    void inizializzazioneGioco() 
+    {
+        p.setPosX(250);
+        p.setPosY(470);
+        loop.setEnd(false);
+        setGameOver(false);
+        loop.score = 0;
+
+        for (int i = 0; i < 3; i++) {
+            Car car = new Car(i * 200, 355, 100,30);
+            car.start(); 
+            cars.add(car);
+        }
+
+        for (int i = 0; i < 3; i++) {
+            int[] posizioniX = {100, 300, 500};
+            Car car = new Car(posizioniX[i], 285, 100,30);
+            car.start(); 
+            cars.add(car);
+        }
+
+        for (int i = 0; i < 3; i++) {
+            Car car = new Car(i * 200, 215, 100,30);
+            car.start(); 
+            cars.add(car);
+        }
+
+        for (int i = 0; i < 3; i++) {
+            int[] posizioniX = {150, 350, 550};
+            Tronco t = new Tronco(posizioniX[i], 135, 100,34);
+            t.start(); 
+            tronchi.add(t);
+        }
+
+        for (int i = 0; i < 3; i++) {
+            Tronco t = new Tronco(i * 200, 98, 100,34);
+            t.start(); 
+            tronchi.add(t);
+        }
+
+        loop.start();
+    }
+
+    public void disegnaBase(Graphics g)
+    {
         //groung
         g.setColor(colorGround);
         g.fillRect(0,390,500,120);
@@ -92,81 +140,23 @@ class MyPanel extends JPanel {
         if (tronchi != null) 
             for (Tronco trs : tronchi) 
                 trs.draw(g);
+    } 
 
-        //disegno del pollo
-        p.draw(g);
-        //disegna il punteggio
-        g.setFont(new Font("Arial", Font.BOLD, 30));
-        g.drawString("Score: " + loop.score, 0,450);
+    private void disegnaSchermataGameOver(Graphics g) {
+    Color veloScuro = new Color(0, 0, 0, 180); 
+    g.setColor(veloScuro);
+
+    g.setFont(new Font("Arial", Font.BOLD, 50));
+    g.drawString("GAME OVER", 110, 100);
+    g.setFont(new Font("Arial", Font.BOLD, 30));
+    g.drawString("Punteggio Finale: " + loop.score, 130, 180);
+    g.setFont(new Font("Arial", Font.PLAIN, 20));
+    g.drawString("Premi [R] per ricominciare", 140, 280);
+    g.drawString("Premi [Q] per uscire dal gioco", 135, 320);
     }
 
-    public void setGameOver(boolean value) {
-        gameOver = value;
-    }
-
-    void inizializzazioneGioco() 
-    {
-        p.setPosX(250);
-        p.setPosY(470);
-        loop.setEnd(false);
-        setGameOver(false);
-        loop.score = 0;
-
-        for (int i = 0; i < 3; i++) {
-            Car car = new Car(i * 200, 355, 100,30,500);
-            car.start(); 
-            cars.add(car);
-        }
-
-        for (int i = 0; i < 3; i++) {
-            int[] posizioniX = {100, 300, 500};
-            Car car = new Car(posizioniX[i], 285, 100,30,500);
-            car.start(); 
-            cars.add(car);
-        }
-
-        for (int i = 0; i < 3; i++) {
-            Car car = new Car(i * 200, 215, 100,30,500);
-            car.start(); 
-            cars.add(car);
-        }
-
-        for (int i = 0; i < 3; i++) {
-            int[] posizioniX = {150, 350, 550};
-            Tronco t = new Tronco(posizioniX[i], 135, 100,34,500);
-            t.start(); 
-            tronchi.add(t);
-        }
-
-        for (int i = 0; i < 3; i++) {
-            Tronco t = new Tronco(i * 200, 98, 100,34,500);
-            t.start(); 
-            tronchi.add(t);
-        }
-
-        loop.start();
-    }
-
-
-    public void ResetGame() {
-        inizializzazioneGioco();
-        for (Car c : cars) {
-            try {
-                c.join();
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-        for (Tronco t : tronchi) {
-            try {
-                t.join();
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-    }
 }
+
+
 
 

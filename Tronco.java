@@ -7,14 +7,12 @@ public class Tronco extends Thread{
     private int velocita = 150; 
     private Color color = new Color(150, 75, 0);
     private boolean running = true;
-    private int panelWidth = 500; 
 
-    public Tronco(int posX, int posY, int W, int H, int panelWidth) {
+    public Tronco(int posX, int posY, int W, int H) {
         this.posX = posX;
         this.posY = posY;
         this.W = W;
         this.H = H;
-        this.panelWidth = panelWidth;
     }
 
     public void draw(Graphics g) {
@@ -34,7 +32,7 @@ public class Tronco extends Thread{
         while (running) {
             posX += 5; 
 
-            if (posX > panelWidth) {
+            if (posX > 500) {
                 posX = -W;
             }
 
