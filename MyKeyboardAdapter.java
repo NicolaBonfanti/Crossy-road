@@ -23,8 +23,8 @@ MyPanel pannelloSuCuiLavorare;
         // TODO Auto-generated method stub
         if(pannelloSuCuiLavorare.gameOver == false)
         {
-            if(e.getKeyChar() == 'w')pannelloSuCuiLavorare.p.move(0, -37, pannelloSuCuiLavorare.getWidth(), pannelloSuCuiLavorare.getHeight());
-            else if(e.getKeyChar() == 's')pannelloSuCuiLavorare.p.move(0, 37, pannelloSuCuiLavorare.getWidth(), pannelloSuCuiLavorare.getHeight());
+            if(e.getKeyChar() == 'w')pannelloSuCuiLavorare.p.move(0, -40, pannelloSuCuiLavorare.getWidth(), pannelloSuCuiLavorare.getHeight());
+            else if(e.getKeyChar() == 's')pannelloSuCuiLavorare.p.move(0, 40, pannelloSuCuiLavorare.getWidth(), pannelloSuCuiLavorare.getHeight());
             else if(e.getKeyChar() == 'a')pannelloSuCuiLavorare.p.move(-17, 0, pannelloSuCuiLavorare.getWidth(), pannelloSuCuiLavorare.getHeight());
             else if(e.getKeyChar() == 'd')pannelloSuCuiLavorare.p.move(17, 0, pannelloSuCuiLavorare.getWidth(), pannelloSuCuiLavorare.getHeight());
 
@@ -32,8 +32,6 @@ MyPanel pannelloSuCuiLavorare;
         }
         else{
             if(e.getKeyChar() == 'q') System.exit(0);
-            //if(e.getKeyChar() == 'r') pannelloSuCuiLavorare.ResetGame();
-
         }
     }
 
