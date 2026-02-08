@@ -2,16 +2,14 @@ import java.util.ArrayList;
 
 public class loop extends Thread{
     private pollo p;
-    private ArrayList<Tronco> t = new ArrayList<Tronco>();
-    private ArrayList<Car> c = new ArrayList<Car>();
     private MyPanel panel;
+    private ArrayList<Lane> mappa;
     private boolean end = false;
     public int score = 0;
 
-    public loop(pollo p, ArrayList<Tronco> t, ArrayList<Car> c, MyPanel panel) {
+    public loop(pollo p, ArrayList<Lane> mappa, MyPanel panel) {
         this.p = p;
-        this.t = t;
-        this.c = c;
+        this.mappa = mappa;
         this.panel = panel;
     }
 
@@ -19,62 +17,26 @@ public class loop extends Thread{
     public void run() {
         while(!end)
         {
-            MuoviPolloSulLegno();
-            EndGameCheck();
+            //controllo delle corsie sul pollo
+            CheckCorsiaPollo();
+            //controllo che non sia terminato il tempo
+            if(panel.timeline != null && panel.timeline.gameOver)
+                end = true;
+            //rende il gioco fluido
+            try {
+                sleep(30);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
+        //fine del gioco
         panel.setGameOver(end);
         panel.repaint();
     }
 
-    public void MuoviPolloSulLegno()
-    {
-        if(CheckOnWood())
-            p.setPosX(p.getPosX() + 5);
-        try {
-            Thread.sleep(150);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public boolean CheckOnWood() {
-        for (Tronco T : t) {
-            boolean collisioneX = (p.getPosX() + p.getW() > T.getPosX()) && (p.getPosX() < T.getPosX() + T.getW());
-            boolean collisioneY = (p.getPosY() + p.getH() > T.getPosY()) && (p.getPosY() < T.getPosY() + T.getH());
-            if (collisioneX && collisioneY) {
-                return true; 
-            }    
-        }
-        return false;
-    }
-
-    public boolean CheckCarCollision()
-    {
-        for (Car car : c) {
-            boolean collisioneX = (p.getPosX() + p.getW() > car.getPosX()) && (p.getPosX() < car.getPosX() + car.getW());
-            boolean collisioneY = (p.getPosY() + p.getH() > car.getPosY()) && (p.getPosY() < car.getPosY() + car.getH());
-            if (collisioneX && collisioneY) 
-                return true; 
-        }
-        return false;
-    }
-    
-    public boolean CheckOnWater()
-    {
-        boolean check = (p.getPosY() > 93 && p.getPosY() < 173);
-        if(check == true && CheckOnWood() == false)
-            return true;
-        return false;
-    }
-
-    public void EndGameCheck(){
-        if(CheckCarCollision())
-            end = true;
-        if(CheckOnWater())
-            end = true;
-        if(panel.timeline.gameOver == true)
-            end = true;
-    }
+    //in base a quale corsia si trovi esegue il check di quella corsia
+    public void CheckCorsiaPollo(){ for(Lane lane : mappa) if(lane.eseguiCheck(p)){end = true; return;} }
 
     public void setEnd(boolean end) {this.end = end;}
 }

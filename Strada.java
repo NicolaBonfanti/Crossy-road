@@ -27,45 +27,44 @@ public class Strada extends Lane{
         }
     }
 
+    @Override
+    public void draw(Graphics g) {
+        g.setColor(colorStreet);
+        g.fillRect(0, y, 500, 40);
 
-        @Override
-        public void draw(Graphics g) {
-            g.setColor(colorStreet);
-            g.fillRect(0, y, 500, 40);
-
-            for(Car c : cars)
-                c.draw(g);
-        }
+        for(Car c : cars)
+            c.draw(g);
+    }
 
 
-        public boolean checkCollisioni(pollo p){
-            //controllo se si trova nella corsia
-            if(p.getPosY() < y || p.getPosY() >= y+40)
-                return false;
-
-            //controllo se collide con un'auto
-            for (Car c : cars) {
-                boolean collisioneX = (p.getPosX() + p.getW() > c.getPosX()) && (p.getPosX() < c.getPosX() + c.getW());
-                boolean collisioneY = (p.getPosY() + p.getH() > c.getPosY()) && (p.getPosY() < c.getPosY() + c.getH());
-
-                if (collisioneX && collisioneY) 
-                    return true; 
-            }
+    @Override
+    public boolean eseguiCheck(pollo p) {
+        //controllo se si trova nella corsia
+        if(p.getPosY() < y || p.getPosY() >= y+40)
             return false;
-        }
 
+        //controllo se collide con un'auto
+        for (Car c : cars) {
+            boolean collisioneX = (p.getPosX() + p.getW() > c.getPosX()) && (p.getPosX() < c.getPosX() + c.getW());
+            boolean collisioneY = (p.getPosY() + p.getH() > c.getPosY()) && (p.getPosY() < c.getPosY() + c.getH());
 
-        public void reset(){
-            //ferma i thread
-            for(Car c : cars)
-                try {
-                    c.join();
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            
-            //svuota la lista di macchine
-            cars.clear();
+            if (collisioneX && collisioneY) 
+                return true; 
         }
+        return false;
+    }
+
+    public void reset(){
+        //ferma i thread
+        for(Car c : cars)
+            try {
+                c.join();
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        
+        //svuota la lista di macchine
+        cars.clear();
+    }
 }

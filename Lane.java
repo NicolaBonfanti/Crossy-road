@@ -11,6 +11,10 @@ public abstract class Lane {
 
     public abstract void draw(Graphics g);
 
+    //metodo universale che restituisce false se il pollo è salvo
+    //creato per semplificare l'implementazione della loop
+    public abstract boolean eseguiCheck(pollo p);
+
     public int getY(){ return y; }
     public int getH(){ return H; }
     public int getW(){ return W; }

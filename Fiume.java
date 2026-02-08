@@ -34,10 +34,11 @@ public class Fiume extends Lane{
             t.draw(g);
     }
 
-    public boolean isSafe(pollo p){
+    @Override
+    public boolean eseguiCheck(pollo p) {
         //controllo se si trova nella corsia
         if(p.getPosY() < y || p.getPosY() >= y + 40)
-                return true;
+                return false;
 
         //controllo se si trova su un tronco
         for (Tronco t : tronchi) {
@@ -45,9 +46,9 @@ public class Fiume extends Lane{
             boolean collisioneY = (p.getPosY() + p.getH() > t.getPosY()) && (p.getPosY() < t.getPosY() + t.getH());
 
             if (collisioneX && collisioneY) 
-                return true; 
+                return false; 
         }
-        return false;
+        return true;
     }
 
     public void reset(){

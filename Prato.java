@@ -14,5 +14,11 @@ public class Prato extends Lane{
         g.setColor(colorGround);
         g.fillRect(0,y,500,40);
     }
+
+    @Override
+    public boolean eseguiCheck(pollo p) {
+        //false perchè il pollo non può mai morire sul prato
+        return false;
+    }
     
 }
