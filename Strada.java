@@ -12,13 +12,16 @@ public class Strada extends Lane{
         super(y);
         this.cars = new ArrayList<>();
 
+        Random r = new Random();
+        int vel = r.nextInt(120) + 30; // 30–149 ms
         int ultimaX = 0;
         //creazione macchine
         for(int i = 0; i < nCars; i++){
+            
             //creazione della macchina in posizione x casuale
             int spazio = 120 + random.nextInt(180);
             int x = ultimaX + spazio;
-            Car c = new Car(x,y+5,80,30);
+            Car c = new Car(x,y+5,80,30,vel);
 
             cars.add(c);
             c.start();

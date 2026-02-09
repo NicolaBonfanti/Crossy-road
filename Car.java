@@ -5,16 +5,17 @@ public class Car extends Thread {
 
     private int posX, posY;
     private int W, H;
-    private int velocita = 75; 
+    private int velocita; 
     private Color color = Color.RED;
     private boolean running = true;
     private int panelWidth = 500; 
 
-    public Car(int posX, int posY, int W, int H) {
+    public Car(int posX, int posY, int W, int H, int velocita) {
         this.posX = posX;
         this.posY = posY;
         this.W = W;
         this.H = H;
+        this.velocita = velocita;
     }
 
     public void draw(Graphics g) {

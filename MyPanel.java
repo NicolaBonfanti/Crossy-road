@@ -97,11 +97,11 @@ class MyPanel extends JPanel {
         for (int i = 1; i < 1000; i++) {
             //posizione successiva alla corsia precedente
             int PosY = 460 - (i * 40);
-            int corsia = random.nextInt(3); 
+            int corsia = random.nextInt(6); 
             //creazione casuale della corsia
-            if (corsia == 0) 
+            if (corsia == 1 || corsia == 2) 
                 mappa.add(new Prato(PosY));
-            else if (corsia == 1) 
+            else if (corsia == 3 || corsia == 4 || corsia == 5) 
                 mappa.add(new Strada(PosY, 10 + random.nextInt(3), 6 + random.nextInt(2)));
             else 
                 mappa.add(new Fiume(PosY, 6 + random.nextInt(2)));
