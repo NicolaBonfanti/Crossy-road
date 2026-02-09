@@ -6,7 +6,6 @@ public class loop extends Thread{
     private ArrayList<Lane> mappa;
     private boolean end = false;
     public int score = -1;
-    public int highScore = 0;
     public int MaxHcam = 0;
 
     public loop(pollo p, ArrayList<Lane> mappa, MyPanel panel) {

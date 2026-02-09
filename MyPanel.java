@@ -24,6 +24,8 @@ class MyPanel extends JPanel {
     public int camY;
     //tiene conto del punto più alto raggiunto
     public int recordY = 470;
+    //tiene conto del punteggio più alto
+    public int highScore = 0;
 
     public MyPanel() {
         setBorder(BorderFactory.createLineBorder(Color.black));
@@ -97,11 +99,11 @@ class MyPanel extends JPanel {
         for (int i = 1; i < 1000; i++) {
             //posizione successiva alla corsia precedente
             int PosY = 460 - (i * 40);
-            int corsia = random.nextInt(6); 
+            int corsia = random.nextInt(3); 
             //creazione casuale della corsia
-            if (corsia == 1 || corsia == 2) 
+            if (corsia == 0) 
                 mappa.add(new Prato(PosY));
-            else if (corsia == 3 || corsia == 4 || corsia == 5) 
+            else if (corsia == 1) 
                 mappa.add(new Strada(PosY, 10 + random.nextInt(3), 6 + random.nextInt(2)));
             else 
                 mappa.add(new Fiume(PosY, 6 + random.nextInt(2)));
@@ -121,31 +123,35 @@ class MyPanel extends JPanel {
         g.drawString("Punteggio Finale: " + loop.score, 130, 180);
         //punteggio massimo raggiunto
         g.setFont(new Font("Arial", Font.BOLD, 25));
-        g.drawString("Miglior Punteggio: " + loop.highScore, 145, 230);
+        g.drawString("Miglior Punteggio: " + highScore, 145, 230);
         //tasti per muoversi nel menù
         g.setFont(new Font("Arial", Font.BOLD, 20));
-        g.drawString("Premi [R] per ricominciare", 14+0, 280);
-        g.drawString("Premi [Q] per uscire dal gioco", 135, 320);
+        g.drawString("Premi [R] per ricominciare", 140, 280);
+        g.drawString("Premi [Q] per uscire dal gioco", 130, 320);
     }
 
     public void resetGame(){
+        //fa ricominciare il gioco
         loop.setEnd(true);
-
+        //reset della timeline
+        timeline.gameOver = true;
+        //finisce il thread loop
         try {
             loop.join(); 
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        //reinizailizza il gioco
         inizializzazioneGioco();
-
+        //crea un nuovo thread della loop
         loop = new loop(p, mappa, this);
         loop.score = 0;
-        timeline = new TimeLine(this, 50, 5);
+        //ricrea la timeline
+        timeline = new TimeLine(this, 50, 5); 
+        //fa iniziare i thread
         loop.start();
         timeline.start();
-    
-        revalidate();
+        //redisegna tutta la mappa
         repaint();
     }
 

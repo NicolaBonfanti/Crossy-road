@@ -5,17 +5,16 @@ public class Car extends Thread {
 
     private int posX, posY;
     private int W, H;
-    private int velocita; 
+    private int velocita = 75; 
     private Color color = Color.RED;
     private boolean running = true;
     private int panelWidth = 500; 
 
-    public Car(int posX, int posY, int W, int H, int velocita) {
+    public Car(int posX, int posY, int W, int H) {
         this.posX = posX;
         this.posY = posY;
         this.W = W;
         this.H = H;
-        this.velocita = velocita;
     }
 
     public void draw(Graphics g) {
@@ -23,6 +22,11 @@ public class Car extends Thread {
         g.fillRect(posX, posY, W, H);
         g.setColor(Color.BLACK);
         g.drawRect(posX, posY, W, H);
+    }
+
+    public void stopCar() {
+        this.running = false;
+        this.interrupt();
     }
 
     @Override

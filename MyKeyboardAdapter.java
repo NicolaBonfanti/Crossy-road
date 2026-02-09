@@ -37,18 +37,17 @@ MyPanel pannelloSuCuiLavorare;
                     //aumenta il punteggio solo se il record aumenta
                     pannelloSuCuiLavorare.loop.score += 1;
                     //aumenta l'higscore solo se lo score è maggiore di quell'ultimo
-                    if(pannelloSuCuiLavorare.loop.score > pannelloSuCuiLavorare.loop.highScore)
-                        pannelloSuCuiLavorare.loop.highScore = pannelloSuCuiLavorare.loop.score;
-                //aggiornamento del record
-                pannelloSuCuiLavorare.recordY = pannelloSuCuiLavorare.p.getPosY();
-                
-                // Muovi la telecamera solo se il pollo supera la metà schermo
-                if (pannelloSuCuiLavorare.p.getPosY() < 250) {
-                    pannelloSuCuiLavorare.camY = 250 - pannelloSuCuiLavorare.p.getPosY();
+                    if(pannelloSuCuiLavorare.loop.score > pannelloSuCuiLavorare.highScore)
+                        pannelloSuCuiLavorare.highScore = pannelloSuCuiLavorare.loop.score;
+                    //aggiornamento del record
+                    pannelloSuCuiLavorare.recordY = pannelloSuCuiLavorare.p.getPosY();
+                    
+                    // Muovi la telecamera solo se il pollo supera la metà schermo
+                    if (pannelloSuCuiLavorare.p.getPosY() < 250) {
+                        pannelloSuCuiLavorare.camY = 250 - pannelloSuCuiLavorare.p.getPosY();
+                    }
                 }
             }
-            } 
-
             //gestisce l'arretramento
             else if(key == 's') {
                 //permette al pollo di non superare il limite inferiore

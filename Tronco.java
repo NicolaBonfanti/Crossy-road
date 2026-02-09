@@ -23,8 +23,9 @@ public class Tronco extends Thread{
     }
 
 
-    public void stopCar() {
-        running = false;
+    public void stopTronco() {
+        this.running = false;
+        this.interrupt();
     }
 
     @Override

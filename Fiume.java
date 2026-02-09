@@ -57,13 +57,15 @@ public class Fiume extends Lane{
 
     @Override
     public void reset(){
-        for(Tronco t : tronchi)
+        for(Tronco t : tronchi){
+            t.stopTronco();
             try {
                 t.join();
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+        }
         tronchi.clear();
     }
 }
