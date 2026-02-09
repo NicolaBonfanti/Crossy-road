@@ -5,7 +5,9 @@ public class loop extends Thread{
     private MyPanel panel;
     private ArrayList<Lane> mappa;
     private boolean end = false;
-    public int score = 0;
+    public int score = -1;
+    public int highScore = 0;
+    public int MaxHcam = 0;
 
     public loop(pollo p, ArrayList<Lane> mappa, MyPanel panel) {
         this.p = p;
@@ -23,8 +25,9 @@ public class loop extends Thread{
             if(panel.timeline != null && panel.timeline.gameOver)
                 end = true;
             //rende il gioco fluido
+
             try {
-                sleep(30);
+                sleep(100);
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

@@ -20,5 +20,9 @@ public class Prato extends Lane{
         //false perchè il pollo non può mai morire sul prato
         return false;
     }
+
+    @Override
+    public void reset() {
+    }
     
 }

@@ -14,7 +14,7 @@ public class Fiume extends Lane{
         int ultimaX = 0;
 
         for(int i = 0; i < nTronchi; i++){
-            int spazio = 150 + random.nextInt(200);
+            int spazio = 120 + random.nextInt(200);
             int x = ultimaX + spazio;
 
             Tronco t  = new Tronco(x, y + 3, 100, 34);
@@ -46,11 +46,16 @@ public class Fiume extends Lane{
             boolean collisioneY = (p.getPosY() + p.getH() > t.getPosY()) && (p.getPosY() < t.getPosY() + t.getH());
 
             if (collisioneX && collisioneY) 
+            {
+                p.setPosX(p.getPosX() + 5);
                 return false; 
+            }
+            
         }
         return true;
     }
 
+    @Override
     public void reset(){
         for(Tronco t : tronchi)
             try {

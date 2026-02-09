@@ -5,7 +5,7 @@ public class Car extends Thread {
 
     private int posX, posY;
     private int W, H;
-    private int velocita = 200; 
+    private int velocita = 75; 
     private Color color = Color.RED;
     private boolean running = true;
     private int panelWidth = 500; 

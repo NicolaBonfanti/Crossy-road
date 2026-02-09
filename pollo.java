@@ -28,7 +28,6 @@ public class pollo {
         posY += dy;
 
         if (posX < 0) posX = 0;
-        if (posY < 0) posY = 0;
         if (posX + W > panelWidth) posX = panelWidth - W;
         if (posY + H > panelHeight) posY = panelHeight - H;
     }
