@@ -1,18 +1,23 @@
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class Prato extends Lane{
+public class Prato extends Lane {
     private Color colorGround = new Color(34, 139, 34);
 
-    public Prato(int y){ 
+    public Prato(int y) { 
         super(y);
     }
     
     @Override
-    public void draw(Graphics g)
-    {
+    public void attivaThread() {
+        // il prato non ha thread da avvia e non fa nulla
+        // ma serve il metodo vuoto per farlo funzionare con la nuova lane
+    }
+
+    @Override
+    public void draw(Graphics g) {
         g.setColor(colorGround);
-        g.fillRect(0,y,500,40);
+        g.fillRect(0, y, 500, 40);
     }
 
     @Override
@@ -23,6 +28,6 @@ public class Prato extends Lane{
 
     @Override
     public void reset() {
+        // non ha oggetti da resettare
     }
-    
 }

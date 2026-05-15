@@ -3,7 +3,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Random;
 
-public class Strada extends Lane{
+public class Strada extends Lane {
     private ArrayList<Car> cars;
     private Color colorStreet = new Color(77, 77, 77);
     private Random random = new Random();
@@ -21,9 +21,19 @@ public class Strada extends Lane{
             Car c = new Car(x,y+5,80,30);
 
             cars.add(c);
-            c.start();
-
+            // rimosso il start() da qui per non sovraccaricare subito
             ultimaX = x;
+        }
+    }
+
+    @Override
+    public void attivaThread() {
+        // fa partire i thread solo la prima volta che la corsia è visibile
+        if (!active) {
+            for (Car c : cars) {
+                if (!c.isAlive()) c.start();
+            }
+            active = true;
         }
     }
 
@@ -35,7 +45,6 @@ public class Strada extends Lane{
         for(Car c : cars)
             c.draw(g);
     }
-
 
     @Override
     public boolean eseguiCheck(pollo p) {

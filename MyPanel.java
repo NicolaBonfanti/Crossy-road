@@ -26,6 +26,9 @@ class MyPanel extends JPanel {
     public int recordY = 470;
     //tiene conto del punteggio più alto
     public int highScore = 0;
+    
+    // serve per sapere dove attaccare la prossima corsia
+    private int ultimaYGenerata;
 
     public MyPanel() {
         setBorder(BorderFactory.createLineBorder(Color.black));
@@ -57,8 +60,13 @@ class MyPanel extends JPanel {
 
         // Disegno della mappa
         for (Lane l : mappa) {
-            l.draw(g);
+            // attiva i thread solo se la corsia sta per entrare nello schermo
+            if (Math.abs(l.getY() + camY) < 600) {
+                l.attivaThread();
+                l.draw(g);
+            }
         }
+        
         //disegno del pollo 
         p.draw(g);
         //permette alla scritta e alla timeline di
@@ -70,6 +78,11 @@ class MyPanel extends JPanel {
         g.setColor(Color.WHITE);
         g.setFont(new Font("Arial", Font.BOLD, 20));
         g.drawString("Score: " + loop.score, 10, 50);
+
+        // se il pollo sale troppo vicino al bordo generato crea nuove corsie
+        if (p.getPosY() < ultimaYGenerata + 500) {
+            generaCorsie(20);
+        }
     }
 
     public void setGameOver(boolean value) { gameOver = value; }
@@ -91,22 +104,28 @@ class MyPanel extends JPanel {
         for(Lane l : mappa) 
             l.reset();
         mappa.clear();
+        
         //creazione del Prato alla base per evitare che il pollo inizi
         //in una corsia non sicura
         mappa.add(new Prato(460));
+        ultimaYGenerata = 460;
         
-        //creazione della mappa
-        for (int i = 1; i < 1000; i++) {
-            //posizione successiva alla corsia precedente
-            int PosY = 460 - (i * 40);
+        // genera il primo blocco di corsie
+        generaCorsie(40);
+    }
+
+    // metodo per aggiungere corsie senza fermarsi mai
+    private void generaCorsie(int quante) {
+        for (int i = 0; i < quante; i++) {
+            ultimaYGenerata -= 40;
             int corsia = random.nextInt(3); 
             //creazione casuale della corsia
             if (corsia == 0) 
-                mappa.add(new Prato(PosY));
+                mappa.add(new Prato(ultimaYGenerata));
             else if (corsia == 1) 
-                mappa.add(new Strada(PosY, 10 + random.nextInt(3), 6 + random.nextInt(2)));
+                mappa.add(new Strada(ultimaYGenerata, 10 + random.nextInt(5), 3 + random.nextInt(2)));
             else 
-                mappa.add(new Fiume(PosY, 6 + random.nextInt(2)));
+                mappa.add(new Fiume(ultimaYGenerata, 2 + random.nextInt(2)));
         }
     }
 
@@ -154,9 +173,4 @@ class MyPanel extends JPanel {
         //redisegna tutta la mappa
         repaint();
     }
-
 }
-
-
-
-
